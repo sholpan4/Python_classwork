@@ -1,2 +1,2 @@
-# My_classwork_Python
+# Python_classwork
  Classwork
