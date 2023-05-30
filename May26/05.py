@@ -9,9 +9,9 @@ except ValueError:
     message = "Вы ввели неправильные данные"
 
 else:
-    result1 = num1 % chocolate
+    result1 = num1 // chocolate
     result2 = num1 - (result1 *chocolate)
-    message = "Вы можете купить %s шоколадок" % result1 
-    "и у вас останется % денег" % result2
+    message = "Вы можете купить %d шоколадок" % result1 
+    message2 = "и у вас останется %s денег" % result2
 
-print(message)
+print(message, message2)
