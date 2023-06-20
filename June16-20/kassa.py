@@ -4,7 +4,7 @@ class Kassa:
     tickets = []
     trains = []
 
-    def register_train(self, source, destination):
+    def register_train(self, train):
         self.tickets.append(new_ticket)
 
         # for t in self.trains:
