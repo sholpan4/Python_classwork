@@ -19,3 +19,5 @@ class Ticket:
         msg = ("Билет №%s: %s -- %s" % (self.number, self.source, self.destination))
         msg += " Пассажир: %s, %s лет, ИИН: %s" % (self.passenger_name, self.passenger_age, self.passenger_iin)
         print(msg)
+
+print("Это билет", __name__)

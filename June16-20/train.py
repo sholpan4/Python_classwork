@@ -24,3 +24,5 @@ class Train:
     def show(self):
         message = "Поезд №%s, от  станции %s до станции %s" % (self.number, self.source, self.destination)
         print(message)
+
+print("Это поезд", __name__)

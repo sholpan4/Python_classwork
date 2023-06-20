@@ -12,3 +12,5 @@ class Kassa:
             person.ticket = Ticket(source, destination,person.name, person.iin, person.age)
         else:
             print("No money, no ticket!")
+
+print("Это касса", __name__)

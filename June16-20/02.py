@@ -2,6 +2,8 @@ from person import Person
 from kassa import Kassa
 from train import Train
 
+print("Главная программа", __name__)
+
 test_man = Person("Ilon Musk", 55)
 test_man.earn(25000)
 # test_man.pay(13000)

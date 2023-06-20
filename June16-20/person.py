@@ -24,3 +24,5 @@ class Person:
             return 0
         self.balance -= amount
         return amount
+
+print("Это человек", __name__)
