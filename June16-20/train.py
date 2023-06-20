@@ -11,6 +11,7 @@ class Train:
         self.destination = destination
         self.number = randint(10000, 99999)
         self.kassa = kassa
+        kassa.register_train(self)
 
     def board(self, person):
         ticket = self.kassa.get_ticket(person.iin, self.source, self.destination)
