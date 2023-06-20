@@ -1,23 +1,32 @@
 from random import randint
+
 class Train:
     source = ""
     destination = ""
     number = 0
+    kassa = None
 
-    def __init__(self, source, destination):
+    def __init__(self, kassa, source, destination):
         self.source = source
         self.destination = destination
         self.number = randint(10000, 99999)
+        self.kassa = kassa
 
     def board(self, person):
-        if person.ticket:
-            if self.source == person.ticket.source and self.destination == person.ticket.destination:
-                message = "Добро пожаловать %s, ваш поезд №%s прибыл, от %s до %s." % (person.name, 
+        ticket = self.kassa.get_ticket(person.iin, self.source, self.destination)
+        if ticket:         
+            message = "Добро пожаловать %s, ваш поезд №%s прибыл, от %s до %s." % (person.name, 
                                                         self.number, self.source, self.destination)
-                print(message)
-                person.ticket = None
-            else:
-                print("Неправильный билет")
+            print(message)
+            self.kassa.delete_ticket(ticket)
+        # if person.ticket:
+        #     if self.source == person.ticket.source and self.destination == person.ticket.destination:
+        #         message = "Добро пожаловать %s, ваш поезд №%s прибыл, от %s до %s." % (person.name, 
+        #                                                 self.number, self.source, self.destination)
+            # print(message)
+            #     person.ticket = None
+            # else:
+            #     print("Неправильный билет")
         else:
             print("Нет билета")
     

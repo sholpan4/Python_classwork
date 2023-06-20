@@ -7,13 +7,17 @@ class Ticket:
     source = ""
     destination = ""
 
-    def __init__(self, source, destination,pas_name, pas_iin, pas_age):
+    def __init__(self, source, destination, pas_name, pas_iin, pas_age):
         self.number = randint(100000, 999999)
         self.source = source
         self.destination = destination
         self.passenger_name = pas_name
         self.passenger_iin = pas_iin
         self.passenger_age = pas_age
+
+    def __repr__(self) -> str:
+        msg = "Билет №%s: %s -- %s" % (self.number, self.source, self.destination)
+        return msg
 
     def show(self):
         msg = ("Билет №%s: %s -- %s" % (self.number, self.source, self.destination))
