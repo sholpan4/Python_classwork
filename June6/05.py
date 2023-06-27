@@ -1,7 +1,7 @@
 import random
 
+
 def get_random_int(min, max):
-    
     result = random.random() * (max - min) + min
 
     return int(result)
