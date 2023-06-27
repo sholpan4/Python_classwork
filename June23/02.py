@@ -36,4 +36,16 @@ fifth_list.sort(reverse=False)
 print(fifth_list)
 
 ######################
+sixth_list = ["Hello", 666, 0, "sun", [6, 7, 8]]
+sixth_list.reverse()
+print(sixth_list)
 
+seventh_list = sixth_list.copy()
+# sixth_list = seventh_list
+seventh_list[2] = "welcome"
+seventh_list[0][2] = "A"
+
+print(sixth_list)
+print(seventh_list)
+
+print(seventh_list is sixth_list)
