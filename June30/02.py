@@ -1,0 +1,1 @@
+#предикат = True or False
