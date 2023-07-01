@@ -23,4 +23,5 @@ def get_upper_letter(element):
     
 first_list = list(filter(get_upper_letter, my_list))
 second_list = list(filter(get_integer, my_list))
-third_list = list()
+third_list = list(filter(get_letter,my_list))
+print(first_list, second_list, third_list)
