@@ -17,14 +17,14 @@ def show_description(scene):
     print(description)
 
 def is_game_end(scene):
-    if "action" in quest["game"][scene]:
+    if "actions" in quest["game"][scene]:
         return False
     return True
 
 def show_actions(scene):
     print("Что будете делать?")
-    for action in quest["game"][scene]["actions"]:
-        print(" -> ", action["name"])
+    for actions in quest["game"][scene]["actions"]:
+        print(" -> ", actions["name"])
 
 def get_user_action():
     while True:
@@ -49,8 +49,8 @@ while True:
     if is_game_end(current_scene):
         break
     show_actions(current_scene)
-    action = get_user_action()
-    effect = check_action(current_scene, action)
+    actions = get_user_action()
+    effect = check_action(current_scene, actions)
     if effect:
         perform_action(effect)
     else:
