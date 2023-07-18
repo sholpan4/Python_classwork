@@ -48,17 +48,19 @@ until($game_end) {
 
 print(f"Конец.\n\n");
 
-def ShowScene() {
+def ShowScene(scene): {
     Disappear();
     ShowDescription();
     printf "\n";
+    # description = kolobok["game"][scene]["DESCRIPTION"]
+    # print(description)
     ShowPocket();
     printf "\n";
     ShowActions();
 }
 
 
-sub GameAction {
+def GameAction (scene):{
     if (!$game{$currentScene}{ACTIONS}){
         $game_end = 1;
         return;
@@ -92,7 +94,7 @@ sub GameAction {
 }
 
 
-sub GetAction {
+def GetAction ():{
     # printf "> ";
     # my $c = <STDIN>;
     # chomp $c;
@@ -112,7 +114,7 @@ sub GetAction {
 }
 
 
-sub ShowDescription {
+def ShowDescription(): {
     my $text = $game
     {$currentScene}{DESCRIPTION};
     $text = ~ s /\n / | / g;
@@ -175,7 +177,7 @@ sub ShowActions {
 
 sub Pause {
     for my $i (0..5) {
-    sleep(0.1);
+    time.sleep(0.1);
     printf ".";
     }
 }
