@@ -15,6 +15,6 @@ for _ in range(len(my_list)):  # _ обознацение переменной �
         if my_list[k] < my_list[min_index]:
             min_index = k
     sorted_list.append([min_index])
-    del my_list[my_index]
+    del my_list[min_index]
 
 print(sorted_list)
