@@ -15,7 +15,7 @@ while is_running:
     message = data.decode(encoding="utf-8")
     print(f'Получено сообщение от {addr}: {message}')
 
-    client_socket.send("HTTP/1.1\n")
+    client_socket.send("HTTP/1.1 200 ok\n Content-type: text/html\n\n<h1>hello</h1>".encode())
 
     if message == "exit":
         is_running = False
