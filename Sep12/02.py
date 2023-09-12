@@ -41,3 +41,6 @@ def get_tread():
 result = result/5
 # average(num)
 print(result)
+
+#2 task 
+#обработка текстов хотя бы на стр
