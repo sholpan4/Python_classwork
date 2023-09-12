@@ -2,7 +2,7 @@ import socket
 
 my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-my_address = ('localhost', 9900)
+my_address = ('192.168.110.119', 9900)
 my_socket.bind(my_address)
 
 is_running = True
