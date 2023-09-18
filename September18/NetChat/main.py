@@ -1,0 +1,13 @@
+# import router  #from router import Router  #import router as r
+import sys
+from PyQt6.QtWidgets import QApplication
+from router import Router
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+
+    route = Router()  #route = router.Router()
+    route.start()
+    
+    app.exec()
+    
