@@ -15,6 +15,8 @@ class Router(QObject):
         self.udp_receiver = UdpReceiver()
         self.udp_sender = UdpSender()
 
+        self.gui.sendMessage.connect(lambda s: print(s))
+
     def start(self):
         # log.d("Starting router")
         self.data_storage.start()
@@ -27,6 +29,8 @@ class Router(QObject):
         self.gui.stop()
         self.udp_receiver.stop()
         self.udp_sender.stop()
+
+    
 
 
     # my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
