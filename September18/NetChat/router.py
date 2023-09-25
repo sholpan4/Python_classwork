@@ -1,12 +1,11 @@
 from PyQt6.QtCore import QObject
-# from logger import Logger
-from data_storage import DataStorage
+from logger import log
 from gui import Gui
+from data_storage import DataStorage
 from udp_receiver import UdpReceiver
 from udp_sender import UdpSender
 from controller import Controller
 
-# log = Logger.Instance
 
 class Router(QObject):
     def __init__(self):
@@ -16,46 +15,23 @@ class Router(QObject):
         self.udp_receiver = UdpReceiver()
         self.udp_sender = UdpSender()
         self.controller = Controller()
-
         self.gui.sendMessage.connect(lambda s: print(s))
         self.gui.loginUser.connect(self.data_storage.auth)
         self.gui.loginUser.connect(self.controller.login)
-        self.controller.switchWindow.connect(self.controller)
-
-
+        self.controller.switchWindow.connect(self.gui.set_window)
+        
+        # Здесь будем роутить сигналы
 
     def start(self):
-        # log.d("Starting router")
+        log.i("Стартуем роутер")
         self.data_storage.start()
         self.gui.start()
         self.udp_receiver.start()
         self.udp_sender.start()
 
     def stop(self):
-        self.data_storage.stop()
-        self.gui.stop()
-        self.udp_receiver.stop()
         self.udp_sender.stop()
-
-    
-
-
-    # my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    # my_addres = ('localhost', 3000)
-    # my_socket.bind(my_addres)
-
-    # my_socket.listen()
-
-    # is_running = True
-    # while is_running:
-    #     client_socket, addr = my_socket.accept()
-    #     data = client_socket.recv(1024)
-
-    #     message = data.decode(encoding= "UTF-8")
-    #     print(f'получено сообщение от {addr}: {message}')
-
-    #     client_socket.send("HTTP/1.1 200 OK\nContent-Type: text/html\n\n<h1>Hello World</h1>".encode())
-
-    #     if message == "exit":
-    #         is_running = False
+        self.udp_receiver.stop()
+        self.gui.stop()
+        self.data_storage.stop()
+        
