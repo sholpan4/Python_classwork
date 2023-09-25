@@ -4,6 +4,7 @@ from data_storage import DataStorage
 from gui import Gui
 from udp_receiver import UdpReceiver
 from udp_sender import UdpSender
+from controller import Controller
 
 # log = Logger.Instance
 
@@ -14,8 +15,14 @@ class Router(QObject):
         self.gui = Gui()
         self.udp_receiver = UdpReceiver()
         self.udp_sender = UdpSender()
+        self.controller = Controller()
 
         self.gui.sendMessage.connect(lambda s: print(s))
+        self.gui.loginUser.connect(self.data_storage.auth)
+        self.gui.loginUser.connect(self.controller.login)
+        self.controller.switchWindow.connect(self.controller)
+
+
 
     def start(self):
         # log.d("Starting router")

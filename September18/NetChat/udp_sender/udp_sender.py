@@ -18,11 +18,11 @@ class UdpSender(QThread):
     #     self.address = address
     #     self.port = port
 
-    # # server_addres = ('192.168.110.150', 9900)
+    # # server_addres = ('192.168.110.150', 9900)   run
     # def send(self, message):
     #     is_running = True
     #     while is_running:
-    #         message = input('Введите что-нибудь(желательно на английском): ')
+    #         message = input('Введите что-нибудь(желательно на английском): ')   argument kotoryi primenyaetsya
     #         my_socket.sendto(message.encode(), server_addres)
     #         if message == 'exit':
     #             is_running = False

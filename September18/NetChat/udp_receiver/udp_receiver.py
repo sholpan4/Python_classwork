@@ -10,11 +10,11 @@ class UdpReceiver(QThread):
     # def MessageReceiver(QThread):
     #     pass
     
+   
+
+    # def __init__(self):
+    # super().__init__
     # my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-    # def __init__(self, port) -> None:
-    #     self.port = port
-
     # def start(self):
 
     #     my_addres = ('localhost', 9900)
@@ -32,3 +32,7 @@ class UdpReceiver(QThread):
     #     if message == 'exit':
     #         return True
     #     return False
+
+
+
+    #

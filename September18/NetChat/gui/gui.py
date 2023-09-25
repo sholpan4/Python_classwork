@@ -1,4 +1,4 @@
-from PyQt6.QtCore import QThread
+from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal
@@ -20,6 +20,7 @@ class Gui(QThread):
 
     def __init__(self):
         super().__init__()
+        self.running = None
         self.window = MainWindow()
         self.window.show()
 
@@ -36,4 +37,29 @@ class Gui(QThread):
         self.sendMessage.emit(message)
         text.clear()
         
-        
+        # show message() read plus show
+
+
+class Gui(QObject):
+    sendMessage = pyqtSignal(str)
+    loginUser = pyqtSignal(str)
+    window : QWidget = None
+
+    def __init__(self):
+        super().__init__()
+        self.set_window('LoginWindow')
+
+
+    def run(self):
+        pass
+
+    def set_window(self, window_name, username=None):
+        if self.window is not None:
+            self.window.hide()
+
+        if window_name == 'MainWindow':
+            self.window = MainWindow()
+            self.window.sendMessage.connect(self.sendMessage)
+        elif window_name == 'LoginWindow':
+            self.window = LoginWindow()
+            self.window.loginUser.connect(self.loginUser)
