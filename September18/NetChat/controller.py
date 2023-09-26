@@ -38,6 +38,9 @@ class Controller(QObject):
                 pass #switch window
             case _:
                 log.w("Unknown state!")
+    
+    def process_signal(self, signal_name):
+        pass
             
 
     switchWindow = pyqtSignal(str, str)
