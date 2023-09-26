@@ -31,6 +31,9 @@ class UdpSender(QThread):
     #     pass
 
 
+#pyqtsignal in run with log.d
+# import threading
+
         
 if __name__ == '__main__':
     pass

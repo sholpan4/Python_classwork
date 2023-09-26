@@ -5,7 +5,7 @@ from PyQt6.QtCore import pyqtSignal
 
 
 class MainWindow(QMainWindow):
-    sendMessage = pyqtSignal(str)
+    sendMessage = pyqtSignal(str, str)
 
     def __init__(self, username):
         super().__init__()
@@ -21,5 +21,10 @@ class MainWindow(QMainWindow):
         log.d("Кнопка нажата")
         textedit = self.findChild(QTextEdit, "MessageToSend")
         message = textedit.toPlainText()
-        self.sendMessage.emit(message)
+        self.sendMessage.emit(message, 'public')
         textedit.clear()
+
+    def show_message(self, message, message_type):
+        display = self.findChild(QTextBrowser, 'MessageDisplay')
+        display.append(f"{message_type}: {message}")
+        

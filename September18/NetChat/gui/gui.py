@@ -7,10 +7,10 @@ from .login_window import LoginWindow
 
 
 class Gui(QObject):
-    sendMessage = pyqtSignal(str)
+    sendMessage = pyqtSignal(str, str)
     loginUser = pyqtSignal(str)
     window : QWidget = None
-    
+    show_message = pyqtSignal(str, str)
     def __init__(self):
         super().__init__()
         self.running = False
@@ -30,6 +30,7 @@ class Gui(QObject):
         match window_name: 
             case 'MainWindow':
                 self.window = MainWindow(username)
+                self.show_message.connect(self.window.show_message)
                 self.window.sendMessage.connect(self.sendMessage)
             case 'LoginWindow':
                 self.window = LoginWindow()
@@ -38,4 +39,3 @@ class Gui(QObject):
                 log.e('Неизвестное имя окна:', window_name)
         if self.running:
             self.run()
-        
