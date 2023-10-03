@@ -3,7 +3,7 @@ import socket
 import time
 from logger import log
 import threading
-
+from message import Message
 
 class UdpSender(QThread):
     _queue = []
@@ -31,9 +31,9 @@ class UdpSender(QThread):
                 time.sleep(0.025)
 
 
-    def send(self, message, message_type):
+    def send(self, msg : Message):
         self.lock.acquire()
-        self._queue.append((message, message_type,))
+        self._queue.append()
         self.lock.release()
 
     def stop(self):
