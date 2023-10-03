@@ -1,38 +1,30 @@
-from PyQt6.QtCore import QThread
+from PyQt6.QtCore import QThread, pyqtSignal
 import socket
+from logger import log
+
+
 
 class UdpReceiver(QThread):
-    # def run(self):
-    #     print("Receiver is running")
+    message = pyqtSignal(str, str)
+    hello = pyqtSignal(str)
 
-    pass
+    def __init__(self):
+        super().__init__()
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.addres = ('localhost', 9900)
+        self.running = False
+        
 
-    # def MessageReceiver(QThread):
-    #     pass
-    
-   
+    def run(self):
+        log.i("Ресивер запущен")
+        self.socket.bind(self.addres)
+        self.running = True
+        while self.running:
+            data, addr = self.socket.recvfrom(4096)
+            message = data.decode(encoding= "utf-8")
+            log.d(f'получено сообщение от {addr}: {message}')
+            self.message.emit(message, 'public')    
 
-    # def __init__(self):
-    # super().__init__
-    # my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    # def start(self):
-
-    #     my_addres = ('localhost', 9900)
-    #     my_socket.bind(my_addres)
-
-    #     is_running = True
-    #     while is_running:
-    #         data, addr = my_socket.recvfrom(1024)
-    #         message = data.decode(encoding= "UTF-8")
-    #         print(f'получено сообщение от {addr}: {message}')
-    #         if message == "exit":
-    #             is_running = False
-
-    # def stop(self, message = 'exit'):
-    #     if message == 'exit':
-    #         return True
-    #     return False
-
-
-
-    #
+    def stop(self):
+        self.running = False
+        super().stop()

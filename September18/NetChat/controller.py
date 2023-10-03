@@ -24,7 +24,7 @@ class Controller(QObject):
         {'from': "CHECK_MSG", 'to': "MAIN_WIN",  'by': "IMMEDIATELY"},
 
         {'from': "MAIN_WIN",  'to': "SEND_MSG",  'by': "GUI_SEND"},
-        {'from': "GUI_SEND",  'to': "MAIN_WIN",  'by': "IMMEDIATELY"},
+        {'from': "SEND_MSG",  'to': "MAIN_WIN",  'by': "IMMEDIATELY"},
 
         {'from': "MAIN_WIN",  'to': "CHANGING_CHAT", 'by': "GUI_CHAT_CHANGE"},
         {'from': "CHANGING_CHAT",  'to': "MAIN_WIN",  'by': "IMMEDIATELY"}
@@ -80,15 +80,19 @@ class Controller(QObject):
             return
         current_transition = allowed_transitions[0]
         self._state = current_transition["to"]
+        log.d(f'Переключились из {current_transition["from"]} в {self._state}, по сигналу {signal_name}')
         self._process_state(*args)
+        log.i('Дошел до этого кода 1')
 
         allowed_transitions = tuple(filter(lambda x: x["from"] == self._state and x["by"] == "IMMEDIATELY", self._transitions))
+        log.d('Дошел до этого кода 2')
+        log.d(allowed_transitions)
         if len(allowed_transitions) == 0:
             return
         current_transition = allowed_transitions[0]
         self._state = current_transition["to"]
-        self._process_state()
-
+        log.d(f'Переключились из {current_transition["from"]} в {self._state}, по сигналу IMMEDIATELY')
+        self._process_state(*args)
 
     def database_ready(self):
         self._process_signal('DB_READY')

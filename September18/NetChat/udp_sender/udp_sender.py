@@ -1,39 +1,41 @@
-from PyQt6.QtCore import QThread
+from PyQt6.QtCore import QThread, pyqtSignal
 import socket
+import time
+from logger import log
+import threading
+
 
 class UdpSender(QThread):
-    # def run(self):
-    #     print("Sender is running")
-
-    pass
-
-    # def MessageSender(QThread):
-    #     pass
-
-    # address = 'lockalhost'
-    # port = 0
-    # my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-    # def __init__(self, address, port) -> None:
-    #     self.address = address
-    #     self.port = port
-
-    # # server_addres = ('192.168.110.150', 9900)   run
-    # def send(self, message):
-    #     is_running = True
-    #     while is_running:
-    #         message = input('Введите что-нибудь(желательно на английском): ')   argument kotoryi primenyaetsya
-    #         my_socket.sendto(message.encode(), server_addres)
-    #         if message == 'exit':
-    #             is_running = False
-    
-    # def receive(self):
-    #     pass
+    _queue = []
+    sent = pyqtSignal(str)
 
 
-#pyqtsignal in run with log.d
-# import threading
+    def __init__(self):
+        super().__init__()
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.addres = ('localhost', 9900)
+        self.running = False
+        self.lock = threading.Lock()
 
-        
-if __name__ == '__main__':
-    pass
+    def run(self):
+        log.i("Сэндер запущен")
+        self.running = True
+        while self.running:
+            if len(self._queue) > 0:
+                self.lock.acquire()
+                msg, msg_type = self._queue.pop()
+                self.lock.release()
+                self.socket.sendto(msg.encode(), self.addres)
+                self.sent.emit(msg)
+            else:
+                time.sleep(0.025)
+
+
+    def send(self, message, message_type):
+        self.lock.acquire()
+        self._queue.append((message, message_type,))
+        self.lock.release()
+
+    def stop(self):
+        self.running = False
+        super().stop()
