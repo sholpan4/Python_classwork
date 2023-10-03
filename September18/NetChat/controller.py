@@ -49,9 +49,9 @@ class Controller(QObject):
                 pass
 
             case "MAIN_WIN":
-                username = args[0]
-                self._username = username
-                self.switchWindow.emit("MainWindow", username)
+                if args:
+                    self.username = args[0]               
+                self.switchWindow.emit("MainWindow", self._username)
             
             case "ADD_FRIEND":
                 name = args[0]
@@ -97,7 +97,7 @@ class Controller(QObject):
         current_transition = allowed_transitions[0]
         self._state = current_transition["to"]
         log.d(f'Переключились из {current_transition["from"]} в {self._state}, по сигналу IMMEDIATELY')
-        self._process_state(*args)
+        self._process_state()
 
     def database_ready(self):
         self._process_signal('DB_READY')
