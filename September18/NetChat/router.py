@@ -30,6 +30,7 @@ class Router(QObject):
         self.controller.showMessage.connect(self.gui.show_message)
         self.controller.sendMessage.connect(self.udp_sender.send)
         self.controller.setChat.connect(self.gui.set_chat)
+        self.controller.sendHello.connect(self.udp_sender.send)
 
         # Сигналы UdpReceiver
         self.udp_receiver.message.connect(self.controller.recived_message)

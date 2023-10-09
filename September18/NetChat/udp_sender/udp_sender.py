@@ -15,7 +15,8 @@ class UdpSender(QThread):
     def __init__(self):
         super().__init__()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.addres = ('localhost', 9900)
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        # self.addres = ('localhost', 9900)
         self.running = False
         self.lock = threading.Lock()
 
@@ -30,7 +31,12 @@ class UdpSender(QThread):
                 self.lock.release()
                 msg.time = datetime.datetime.now().strftime('%H:%M:%S')
                 string_to_send = msg.toJson()
-                self.socket.sendto(string_to_send.encode(), self.addres)
+                if msg.type in ("public", "service_request"):
+                    adr = ('255.255.255.255', 9900)
+                    self.socket.sendto(string_to_send.encode(), adr)
+                elif msg.senderIp:
+                    adr = (msg.senderIp, 9900)
+                    self.socket.sendto(string_to_send.encode(), adr)
                 self.sent.emit(msg)
             else:
                 time.sleep(0.025)

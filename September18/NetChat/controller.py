@@ -9,14 +9,20 @@ class Controller(QObject):
     showMessage = pyqtSignal(Message)
     sendMessage = pyqtSignal(Message)
     setChat = pyqtSignal(str)
+    sendHello = pyqtSignal(Message)
 
     _username = 'John Doe'
     _state = "INIT"
     _transitions = (
         {'from': "INIT",     'to': "LOGIN",       'by': "DB_READY"},
         {'from': "LOGIN",    'to': "AUTH",        'by': "GUI_LOGIN"},
-        {'from': "AUTH",     'to': "MAIN_WIN",    'by': "DB_AUTH_OK"},
+        # {'from': "AUTH",     'to': "MAIN_WIN",    'by': "DB_AUTH_OK"},
+
         {'from': "AUTH",     'to': "LOGIN",       'by': "DB_AUTH_BAD"},
+
+        {'from': "AUTH",     'to': "HELLO",       'by': "DB_AUTH_OK"},
+        {'from': "HELLO",    'to': "MAIN_WIN",    'by': "IMMEDIATLY"},
+        
 
         {'from': "MAIN_WIN", 'to': "ADD_FRIEND",  'by': "UR_HELLO"},
         {'from': "ADD_FRIEND", 'to': "MAIN_WIN",  'by': "IMMEDIATELY"},
@@ -48,14 +54,28 @@ class Controller(QObject):
             case "AUTH":
                 pass
 
-            case "MAIN_WIN":
+            case "HELLO":
                 if args:
-                    self.username = args[0]               
+                    self.username = args[0]
+                hello_msg = Message('{"text": "Hello"}')
+                self._username = hello_msg.senderName
+                hello_msg.type = "service_request"
+                self.sendHello.emit(hello_msg)
+
+            case "MAIN_WIN":       
                 self.switchWindow.emit("MainWindow", self._username)
             
             case "ADD_FRIEND":
-                name = args[0]
-                self.addContact.emit(name)
+                message = args[0]
+                log.d("Добавляем нового друга:", message.senderName)
+                self.addContact.emit(message.senderName)
+                if message.type == "service_request":
+                    response = Message('{"text": "hello"}')
+                    response.type = "service_response"
+                    response.senderName = self._username
+                    response.receiverName = message.senderName
+                    response.receiverIP = message.senderIP
+                    self.sendMessage.emit(response)
 
             case "CHECK_MSG":
                 msg : Message = args[0]
@@ -102,7 +122,7 @@ class Controller(QObject):
     def database_ready(self):
         self._process_signal('DB_READY')
 
-    def login(self, username):
+    def login(self, username, password):
         if username:
             self._process_signal('GUI_LOGIN', username)
     
@@ -112,8 +132,8 @@ class Controller(QObject):
     def database_auth_bad(self, error_text):
         self._process_signal('DB_AUTH_BAD')
 
-    def recived_hello(self, name):
-        self._process_signal('UR_HELLO', name)
+    def recived_hello(self, msg):
+        self._process_signal('UR_HELLO', msg)
     
     def recived_message(self, msg):
         self._process_signal('UR_MESSAGE', msg)

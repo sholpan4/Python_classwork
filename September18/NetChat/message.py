@@ -5,7 +5,10 @@ class Message():
     text = ''
     type = ''
     senderName = ''
+    senderIp = ''
     receiverName = ''
+    receiverIp = ''
+    
 
     def __init__(self, jsonstring):
         data = json.loads(jsonstring)
@@ -20,6 +23,10 @@ class Message():
             self.receiverName = data['receiverName']
         if 'type' in data:
             self.type = data['type']
+        if 'senderIp' in data:
+            self.senderIp = data['senderIp']
+        if 'receiverIp' in data:
+            self.receiverIp = data['receiverIp']
 
     def toJson(self):
         data = {}
@@ -27,7 +34,9 @@ class Message():
         data['text'] = self.text
         data['type'] = self.type
         data['senderName'] = self.senderName
+        data['senderIp'] = self.senderIp
         data['receiverName'] = self.receiverName
+        data['receiverIp'] = self.receiverIp
 
         return json.dumps(data)
 
