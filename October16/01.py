@@ -14,9 +14,17 @@ class Message():
         msg = Message('{"text: "%s"}'  % text)
         return msg
 
+    @staticmethod
+    def copy(msg):
+        jsonstring = msg.toJson()
+        new_message = Message(jsonstring)
+        return new_message
 
-    # def copy(msg: Message):
-    #     pass
+    @classmethod
+    def default_type(cls):
+        return cls.type
+
+    
 
     def __init__(self, jsonstring):
         data = json.loads(jsonstring)
@@ -48,9 +56,16 @@ class Message():
 
         return json.dumps(data)
 
+    @property
+    def json(self):
+        return self.toJson()
+
 if '__main__' == __name__:
     # msg = Message('{"taxt": "lalala", "time": 50}')
     # print(msg.toJson())
 
     msg2 = Message.fromText("smth")
     print(msg2.toJson())
+
+    msg3 = Message.copy(msg2)
+    print(msg3.toJson())
