@@ -1,0 +1,19 @@
+1. UDP
+2. JSON
+3. class
+4. Dictionaries
+5. Lists, Tuples
+6. sys.argv
+7. Tables = matrix
+8. Reading codes
+
+neiroset, neironi, psihologiya, privychki codiing
+kortizol - fast&furious needs for 
+serotonin - sleeping, tok
+dofomin - chocolate, estetic in process of coding
+
+idol programmer
+alder pondura
+
+pet project pygame, telegram
+machine statement
